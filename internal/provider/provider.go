@@ -2,6 +2,8 @@ package provider
 
 import (
 	"context"
+	client "github.com/mohamed-gara/terraform-provider-npm/internal/client"
+	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -26,11 +28,29 @@ func init() {
 func New(version string) func() *schema.Provider {
 	return func() *schema.Provider {
 		p := &schema.Provider{
-			DataSourcesMap: map[string]*schema.Resource{
-				"scaffolding_data_source": dataSourceScaffolding(),
+			Schema: map[string]*schema.Schema{
+				"url": {
+					Description: "The npm registry URL. The value can be defined using the TERRAFORM_PROVIDER_NPM_URL environment variable.",
+					Type:        schema.TypeString,
+					Required:    true,
+					DefaultFunc: schema.EnvDefaultFunc("TERRAFORM_PROVIDER_NPM_URL", nil),
+				},
+				"username": {
+					Description: "The username to use for authentication. The username should be defined with the TERRAFORM_PROVIDER_NPM_USERNAME environment variable.",
+					Type:        schema.TypeString,
+					Optional:    true,
+					DefaultFunc: schema.EnvDefaultFunc("TERRAFORM_PROVIDER_NPM_USERNAME", nil),
+				},
+				"password": {
+					Description: "The password to use for authentication. The password should be defined with the TERRAFORM_PROVIDER_NPM_PASSWORD environment variable.",
+					Type:        schema.TypeString,
+					Optional:    true,
+					Sensitive:   true,
+					DefaultFunc: schema.EnvDefaultFunc("TERRAFORM_PROVIDER_NPM_PASSWORD", nil),
+				},
 			},
-			ResourcesMap: map[string]*schema.Resource{
-				"scaffolding_resource": resourceScaffolding(),
+			DataSourcesMap: map[string]*schema.Resource{
+				"npm_package": dataSourceNpmPackage(),
 			},
 		}
 
@@ -40,18 +60,27 @@ func New(version string) func() *schema.Provider {
 	}
 }
 
+/*
 type apiClient struct {
 	// Add whatever fields, client or connection info, etc. here
 	// you would need to setup to communicate with the upstream
 	// API.
 }
+*/
 
-func configure(version string, p *schema.Provider) func(context.Context, *schema.ResourceData) (interface{}, diag.Diagnostics) {
-	return func(context.Context, *schema.ResourceData) (interface{}, diag.Diagnostics) {
+func configure(_ string, _ *schema.Provider) func(context.Context, *schema.ResourceData) (interface{}, diag.Diagnostics) {
+	return func(_ context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
 		// Setup a User-Agent for your API client (replace the provider name for yours):
-		// userAgent := p.UserAgent("terraform-provider-scaffolding", version)
+		// userAgent := p.UserAgent("terraform-provider-npm", version)
 		// TODO: myClient.UserAgent = userAgent
+		url := d.Get("url").(string)
+		username := d.Get("username").(string)
+		password := d.Get("password").(string)
+		apiClient, err := client.NewNpmRegistryClient(&url, &password, &username)
+		if err != nil {
+			log.Fatal("Can't load API client!")
+		}
 
-		return &apiClient{}, nil
+		return apiClient, nil
 	}
 }

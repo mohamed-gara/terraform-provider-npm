@@ -1,0 +1,104 @@
+{
+	"name": "my-package-npm",
+	"versions": {
+		"1.0.0": {
+			"name": "my-package-npm",
+			"version": "1.0.0",
+			"description": "",
+			"main": "index.js",
+			"scripts": {
+				"test": "echo \"Error: no test specified\" && exit 1"
+			},
+			"repository": {
+				"type": "git",
+				"url": "git+https://github.com/tommypngo/my-package-npm.git"
+			},
+			"author": "",
+			"license": "ISC",
+			"bugs": {
+				"url": "https://github.com/tommypngo/my-package-npm/issues"
+			},
+			"homepage": "https://github.com/tommypngo/my-package-npm#readme",
+			"gitHead": "4eb424492327e4c34c81fde3b7604f263d10c072",
+			"_id": "my-package-npm@1.0.0",
+			"_nodeVersion": "13.11.0",
+			"_npmVersion": "6.14.7",
+			"dist": {
+				"integrity": "sha512-veQpm/Y82FcFygtUk3Hx2b1W2pSLGpXsWrh/FJOFpUfgsc7DrCvXiqbIauRtzOzRXEM9X+Y6w7ftn8XKZIMuyw==",
+				"shasum": "9154b10ca8c64187b9d94b0daebdd5e47b7f9271",
+				"tarball": "https://registry.npmjs.org/my-package-npm/-/my-package-npm-1.0.0.tgz",
+				"fileCount": 2,
+				"unpackedSize": 483,
+				"npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJfNOXrCRA9TVsSAnZWagAA77UQAJ2UVDdUfgYBAMk3IrVA\nhssVnytMeLf+BR/+s1Ux3SYtjd4BZPWVyJ/Y/G3fNm/JbynRVFoPaTdCW9IC\nGAdvOOvuS/HAH/vvMxcUxtlV71XXlZka9MNTXDZwZAHWblhb8EDb3Q5FfC81\nOuWR+QcLHSzQuRkwQrnKi2sx5N/cksgxr/R1/GGEN/CGdylFoDgxne5ODnpE\nWM2Q62LqVebVZGZpPRkF8VfRWI9USSZb7dQ9zuRjhq1OlO4VN3SEbg9iWj+I\najTtwzNN0hBWr14c1t7f1Jf6W7+kDucDUpILcvhNGVggL9cfFbyuP5LdJikS\nhftLnS9Cl/u52CfC4hzOR4JkopLtHrNiIPuEu12fyYb3pL89zIZ7KnQGg4xM\ntn5m0PDq4JDM4Uify/wEMGMOACc9SRyHZwxBI73xiEEKXC1YXOgMF3QYolKm\nVcxwVXeASBueVYxCM3JUDk1uzZlfl8XDaOjC3h4IoJXVyCcUx0HTFoZKHIto\nAT8zlvhx+z6eC6b/s7guTqIv3nKpXiukuKvFD8yCmnDkwxmutsk7ubpw4Q9i\ncbS7IrjbxTaPy7ak1olvidVJvyvS25bPVQMfA+ytg9Dbs+vsWaO06OXd2Si8\nWYE1aRBKvgWusdgwdJnaEQE2HjSOUvuAvo9edYJcZSEoskYlt7er0OcCScmf\nmMY6\r\n=QlZQ\r\n-----END PGP SIGNATURE-----\r\n"
+			},
+			"maintainers": [
+				{
+					"name": "pdvngo",
+					"email": "pngo.developer@gmail.com"
+				}
+			],
+			"_npmUser": {
+				"name": "pdvngo",
+				"email": "pngo.developer@gmail.com"
+			},
+			"directories": {},
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/my-package-npm_1.0.0_1597302250667_0.39814776716109823"
+			},
+			"_hasShrinkwrap": false,
+			"contributors": []
+		},
+		"1.1.0": {
+			"name": "my-package-npm",
+			"version": "1.1.0",
+			"_id": "my-package-npm@1.1.0",
+			"_nodeVersion": "14.18.0",
+			"_npmVersion": "6.14.15",
+			"maintainers": [
+				{}
+			],
+			"dist": {
+				"integrity": "sha512-xXVJVzISpSKOrCFDtLtKC+N+i00A4E1GCaUHGi8xJTtLPKg3y7QwcDubq8ZL9EflPaqXB5wa2h0FbYTCpELMzg==",
+				"shasum": "b3268f732541120317f61a3227cdb2a86d63a897",
+				"tarball": "http://localhost:49170/my-package-npm/-/my-package-npm-1.1.0.tgz"
+			},
+			"contributors": []
+		}
+	},
+	"time": {
+		"created": "2020-08-13T07:04:10.666Z",
+		"1.0.0": "2020-08-13T07:04:10.768Z",
+		"modified": "2022-01-29T00:09:16.045Z",
+		"1.1.0": "2022-01-29T00:09:16.045Z"
+	},
+	"users": {},
+	"dist-tags": {
+		"latest": "1.1.0"
+	},
+	"_uplinks": {
+		"npmjs": {
+			"etag": "W/\"7358e1911456bf34a8a92e87ce7a05e8\"",
+			"fetched": 1643415165565
+		}
+	},
+	"_distfiles": {
+		"my-package-npm-1.0.0.tgz": {
+			"url": "https://registry.npmjs.org/my-package-npm/-/my-package-npm-1.0.0.tgz",
+			"sha": "9154b10ca8c64187b9d94b0daebdd5e47b7f9271",
+			"registry": "npmjs"
+		}
+	},
+	"_attachments": {
+		"my-package-npm-1.0.0.tgz": {
+			"shasum": "1c37294f456180117b814b0b6d797f2f3c7b30e4"
+		},
+		"my-package-npm-1.1.0.tgz": {
+			"shasum": "b3268f732541120317f61a3227cdb2a86d63a897",
+			"version": "1.1.0"
+		}
+	},
+	"_rev": "6-64810d15071ab9fa",
+	"_id": "my-package-npm",
+	"readme": "ERROR: No README data found!"
+}
