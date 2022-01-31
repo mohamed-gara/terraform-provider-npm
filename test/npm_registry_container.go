@@ -37,9 +37,9 @@ func setupNpmRegistry(ctx context.Context) (*NpmRegistryContainer, error) {
 		ExposedPorts: []string{"4873/tcp"},
 		AutoRemove:   true,
 		BindMounts: map[string]string{
-			"/verdaccio/conf/config.yaml": rootPath + "/examples/verdaccio/config.yaml",
-			"/verdaccio/storage/htpasswd": rootPath + "/examples/verdaccio/htpasswd",
-			"/verdaccio/storage/data":     rootPath + "/examples/verdaccio/data",
+			"/verdaccio/conf/config.yaml": rootPath + "/verdaccio/config.yaml",
+			"/verdaccio/storage/htpasswd": rootPath + "/verdaccio/htpasswd",
+			"/verdaccio/storage/data":     rootPath + "/verdaccio/data",
 		},
 		WaitingFor: wait.ForLog("http://0.0.0.0:4873/"),
 	}
