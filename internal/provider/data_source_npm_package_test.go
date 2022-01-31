@@ -45,9 +45,15 @@ func TestAccDataSourceNpmPackage(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestMatchResourceAttr("data.npm_package.my_pkg", "name", regexp.MustCompile("my-package-npm")),
 					resource.TestMatchResourceAttr("data.npm_package.my_pkg", "version", regexp.MustCompile("1.1.0")),
-					resource.TestMatchResourceAttr("data.npm_package.my_pkg", "files.0", regexp.MustCompile(folderAbsolutePath+"/file1.txt")),
-					resource.TestMatchResourceAttr("data.npm_package.my_pkg", "files.1", regexp.MustCompile(folderAbsolutePath+"/file2.txt")),
-					resource.TestMatchResourceAttr("data.npm_package.my_pkg", "files.2", regexp.MustCompile(folderAbsolutePath+"/package.json")),
+
+					resource.TestMatchResourceAttr("data.npm_package.my_pkg", "files.0.absolute_path", regexp.MustCompile(folderAbsolutePath+"/file1.txt")),
+					resource.TestMatchResourceAttr("data.npm_package.my_pkg", "files.0.mime_type", regexp.MustCompile("text/plain")),
+
+					resource.TestMatchResourceAttr("data.npm_package.my_pkg", "files.1.absolute_path", regexp.MustCompile(folderAbsolutePath+"/file2.txt")),
+					resource.TestMatchResourceAttr("data.npm_package.my_pkg", "files.1.mime_type", regexp.MustCompile("text/plain")),
+
+					resource.TestMatchResourceAttr("data.npm_package.my_pkg", "files.2.absolute_path", regexp.MustCompile(folderAbsolutePath+"/package.json")),
+					resource.TestMatchResourceAttr("data.npm_package.my_pkg", "files.2.mime_type", regexp.MustCompile("application/json")),
 				),
 			},
 		},

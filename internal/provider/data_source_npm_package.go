@@ -8,6 +8,8 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+
+	"github.com/gabriel-vasile/mimetype"
 )
 
 func dataSourceNpmPackage() *schema.Resource {
@@ -29,8 +31,17 @@ func dataSourceNpmPackage() *schema.Resource {
 				Description: "Package files",
 				Type:        schema.TypeList,
 				Computed:    true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"absolute_path": {
+							Type:     schema.TypeString,
+							Required: true,
+						},
+						"mime_type": {
+							Type:     schema.TypeString,
+							Required: true,
+						},
+					},
 				},
 			},
 		},
@@ -48,13 +59,13 @@ func dataSourceNpmPackageRead(_ context.Context, d *schema.ResourceData, meta in
 		return diag.FromErr(e)
 	}
 
-	filesName, e := downloadedFiles()
+	filesNames, e := downloadedFiles()
 	if e != nil {
 		return diag.FromErr(e)
 	}
 
 	d.SetId(name + "-" + version)
-	err := d.Set("files", filesName)
+	err := d.Set("files", filesNames)
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -62,8 +73,8 @@ func dataSourceNpmPackageRead(_ context.Context, d *schema.ResourceData, meta in
 	return nil
 }
 
-func downloadedFiles() ([]string, error) {
-	var filesName []string
+func downloadedFiles() ([]map[string]string, error) {
+	var filesName []map[string]string
 	rootPath := "./package" //TODO: should be extracted to a constant
 	e := filepath.Walk(rootPath, func(path string, info os.FileInfo, err error) error {
 		if !info.IsDir() {
@@ -71,12 +82,24 @@ func downloadedFiles() ([]string, error) {
 			if pathErr != nil {
 				return pathErr
 			}
-			filesName = append(filesName, absolutePath)
+
+			mtype, err := mimetype.DetectFile(absolutePath)
+			if err != nil {
+				return err
+			}
+
+			fileObject := map[string]string{
+				"absolute_path": absolutePath,
+				"mime_type":     mtype.String(),
+			}
+			filesName = append(filesName, fileObject)
 		}
 		return nil
 	})
 
-	sort.Strings(filesName)
+	sort.Slice(filesName, func(i, j int) bool {
+		return filesName[j]["absolte_path"] < filesName[i]["absolte_path"]
+	})
 
 	return filesName, e
 }
