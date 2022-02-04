@@ -50,11 +50,11 @@ func dataSourceNpmPackage() *schema.Resource {
 
 func dataSourceNpmPackageRead(_ context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	// use the meta value to retrieve your client from the provider configure method
-	apiClient := meta.(*client.NpmRegistryClient)
+	apiClient := meta.(*client.NpmRegistry)
 
 	name := d.Get("name").(string)
 	version := d.Get("version").(string)
-	e := apiClient.DownloadPackageToDestination(name, version, ".")
+	e := apiClient.DownloadPackage(name, version, ".")
 	if e != nil {
 		return diag.FromErr(e)
 	}

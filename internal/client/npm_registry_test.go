@@ -29,7 +29,7 @@ func TestNpmRegistryClient(t *testing.T) {
 
 	//TODO add file to package directory
 
-	downloadErr := client.DownloadPackageToDestination("my-package-npm", "1.1.0", ".")
+	downloadErr := client.DownloadPackage("my-package-npm", "1.1.0", ".")
 	if downloadErr != nil {
 		t.Fatal(downloadErr)
 	}
@@ -50,7 +50,7 @@ func TestNpmRegistryClient(t *testing.T) {
 	}
 }
 
-func AuthenticatedClientFor(registry *NpmRegistryContainer) (*NpmRegistryClient, error) {
+func AuthenticatedClientFor(registry *NpmRegistryContainer) (*NpmRegistry, error) {
 	secret := "verdaccio"
-	return NewNpmRegistryClient(&registry.URI, &secret, &secret)
+	return NewNpmRegistry(&registry.URI, &secret, &secret)
 }
