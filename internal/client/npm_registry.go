@@ -69,10 +69,10 @@ func (registry *NpmRegistry) DownloadPackage(name, version, destinationDirectory
 }
 
 func (registry *NpmRegistry) fetchPackageVersionMetadata(name, version string) (*PackageVersionMetadata, error) {
-	metadataUrl := registry.url + "/" + name + "/" + version
+	metadataUrl := registry.url + "/" + name
 	req, requestErr := http.NewRequest(http.MethodGet, metadataUrl, http.NoBody)
 	if requestErr != nil {
-		return nil, fmt.Errorf("failed to get packet information: %v", requestErr)
+		return nil, fmt.Errorf("failed to fetch package metadata: %v", requestErr)
 	}
 
 	body, err := registry.sendAuthenticatedRequest(req)
@@ -80,14 +80,19 @@ func (registry *NpmRegistry) fetchPackageVersionMetadata(name, version string) (
 		return nil, fmt.Errorf("failed to get packet information: %v", err)
 	}
 
-	var pack *PackageVersionMetadata
+	var packageMetadata *PackageMetadata
 	decoder := json.NewDecoder(bytes.NewReader(body))
-	decodeErr := decoder.Decode(&pack)
+	decodeErr := decoder.Decode(&packageMetadata)
 	if decodeErr != nil {
 		return nil, fmt.Errorf("invalid response: %v", err)
 	}
 
-	return pack, nil
+	versionMetadata, exists := packageMetadata.Versions[version]
+	if !exists {
+		return nil, fmt.Errorf("package version %s@%v not found", name, version)
+	}
+
+	return versionMetadata, nil
 }
 
 func (registry *NpmRegistry) downloadTarball(metadata *PackageVersionMetadata) ([]byte, error) {
