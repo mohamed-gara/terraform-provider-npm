@@ -109,7 +109,7 @@ func (registry *NpmRegistry) downloadTarball(metadata *PackageVersionMetadata) (
 }
 
 func (registry *NpmRegistry) sendAuthenticatedRequest(req *http.Request) ([]byte, error) {
-	req.Header.Set("Authorization", tokenOf(&registry.credentials.password, &registry.credentials.password))
+	req.Header.Set("Authorization", tokenOf(&registry.credentials.username, &registry.credentials.password))
 
 	res, err := registry.httpClient.Do(req)
 	if err != nil {
@@ -141,6 +141,7 @@ func cleanUpExisting(destinationDirectory string) error {
 }
 
 func tokenOf(username *string, password *string) string {
-	token := base64.StdEncoding.EncodeToString([]byte(*username + ":" + *password))
+	value := *username + ":" + *password
+	token := base64.StdEncoding.EncodeToString([]byte(value))
 	return "Basic " + token
 }

@@ -20,7 +20,7 @@ func TestAccDataSourceNpmPackage(t *testing.T) {
 	defer registry.Terminate(ctx)
 
 	os.Setenv("TERRAFORM_PROVIDER_NPM_URL", registry.URI)
-	os.Setenv("TERRAFORM_PROVIDER_NPM_USERNAME", "verdaccio")
+	os.Setenv("TERRAFORM_PROVIDER_NPM_USERNAME", "user")
 	os.Setenv("TERRAFORM_PROVIDER_NPM_PASSWORD", "verdaccio")
 	defer os.Unsetenv("TERRAFORM_PROVIDER_NPM_URL")
 	defer os.Unsetenv("TERRAFORM_PROVIDER_NPM_USERNAME")

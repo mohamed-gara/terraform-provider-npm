@@ -51,6 +51,7 @@ func TestNpmRegistryClient(t *testing.T) {
 }
 
 func AuthenticatedClientFor(registry *NpmRegistryContainer) (*NpmRegistry, error) {
+	user := "user"
 	secret := "verdaccio"
-	return NewNpmRegistry(&registry.URI, &secret, &secret)
+	return NewNpmRegistry(&registry.URI, &user, &secret)
 }

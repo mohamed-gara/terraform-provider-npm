@@ -76,7 +76,7 @@ func configure(_ string, _ *schema.Provider) func(context.Context, *schema.Resou
 		url := d.Get("url").(string)
 		username := d.Get("username").(string)
 		password := d.Get("password").(string)
-		apiClient, err := client.NewNpmRegistry(&url, &password, &username)
+		apiClient, err := client.NewNpmRegistry(&url, &username, &password)
 		if err != nil {
 			log.Fatal("Can't load API client!")
 		}
