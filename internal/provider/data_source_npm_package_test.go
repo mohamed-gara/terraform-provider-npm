@@ -42,20 +42,29 @@ func TestAccDataSourceNpmPackage(t *testing.T) {
 				  		version = "1.1.0"
 					}
 				`,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestMatchResourceAttr("data.npm_package.my_pkg", "name", regexp.MustCompile("my-package-npm")),
-					resource.TestMatchResourceAttr("data.npm_package.my_pkg", "version", regexp.MustCompile("1.1.0")),
-
-					resource.TestMatchResourceAttr("data.npm_package.my_pkg", "files.0.absolute_path", regexp.MustCompile(folderAbsolutePath+"/file1.txt")),
-					resource.TestMatchResourceAttr("data.npm_package.my_pkg", "files.0.mime_type", regexp.MustCompile("text/plain")),
-
-					resource.TestMatchResourceAttr("data.npm_package.my_pkg", "files.1.absolute_path", regexp.MustCompile(folderAbsolutePath+"/file2.txt")),
-					resource.TestMatchResourceAttr("data.npm_package.my_pkg", "files.1.mime_type", regexp.MustCompile("text/plain")),
-
-					resource.TestMatchResourceAttr("data.npm_package.my_pkg", "files.2.absolute_path", regexp.MustCompile(folderAbsolutePath+"/package.json")),
-					resource.TestMatchResourceAttr("data.npm_package.my_pkg", "files.2.mime_type", regexp.MustCompile("application/json")),
-				),
+				Check: checkAttributes(map[string]string{
+					"name":                  "my-package-npm",
+					"version":               "1.1.0",
+					"files.0.absolute_path": folderAbsolutePath + "/file1.txt",
+					"files.0.mime_type":     "text/plain",
+					"files.1.absolute_path": folderAbsolutePath + "/file2.txt",
+					"files.1.mime_type":     "text/plain",
+					"files.2.absolute_path": folderAbsolutePath + "/package.json",
+					"files.2.mime_type":     "application/json",
+				}),
 			},
 		},
 	})
+}
+
+func checkAttributes(attributes map[string]string) resource.TestCheckFunc {
+	checks := make([]resource.TestCheckFunc, 0, len(attributes))
+	for k, v := range attributes {
+		checks = append(checks, checkAttribute(k, v))
+	}
+	return resource.ComposeTestCheckFunc(checks...)
+}
+
+func checkAttribute(attribute, valueRegex string) resource.TestCheckFunc {
+	return resource.TestMatchResourceAttr("data.npm_package.my_pkg", attribute, regexp.MustCompile(valueRegex))
 }
