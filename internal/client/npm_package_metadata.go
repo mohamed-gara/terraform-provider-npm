@@ -11,7 +11,8 @@ type PackageVersionMetadata struct {
 	Version string `json:"version"`
 
 	Dist struct {
-		Shasum  string `json:"shasum"`
-		Tarball string `json:"tarball"`
+		Integrity string `json:"integrity"`
+		Shasum    string `json:"shasum"`
+		Tarball   string `json:"tarball"`
 	} `json:"dist"`
 }

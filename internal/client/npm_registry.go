@@ -3,17 +3,19 @@ package client
 import (
 	"bytes"
 	"context"
+	"crypto/sha1"
 	"encoding/base64"
+	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"github.com/codeclysm/extract"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"path/filepath"
 	"time"
-
-	"github.com/codeclysm/extract"
 )
 
 type NpmRegistry struct {
@@ -58,6 +60,11 @@ func (registry *NpmRegistry) DownloadPackage(name, version, destinationDirectory
 		return err
 	}
 
+	shaError := verifySha1(body, metadata)
+	if shaError != nil {
+		return shaError
+	}
+
 	err = extract.Archive(context.Background(), bytes.NewReader(body), destinationDirectory, func(name string) string {
 		return name
 	})
@@ -84,7 +91,7 @@ func (registry *NpmRegistry) fetchPackageVersionMetadata(name, version string) (
 	decoder := json.NewDecoder(bytes.NewReader(body))
 	decodeErr := decoder.Decode(&packageMetadata)
 	if decodeErr != nil {
-		return nil, fmt.Errorf("invalid response: %v", err)
+		return nil, fmt.Errorf("invalid response: %v", decodeErr)
 	}
 
 	versionMetadata, exists := packageMetadata.Versions[version]
@@ -93,6 +100,19 @@ func (registry *NpmRegistry) fetchPackageVersionMetadata(name, version string) (
 	}
 
 	return versionMetadata, nil
+}
+
+func verifySha1(requestBody []byte, metadata *PackageVersionMetadata) error {
+	h := sha1.New()
+	h.Write(requestBody)
+
+	actualSha1 := hex.EncodeToString(h.Sum(nil))
+	expectedSha1 := metadata.Dist.Shasum
+
+	if expectedSha1 != actualSha1 {
+		return errors.New(fmt.Sprintf("Downloaded file from %s should have '%s' as checksum instead of '%s'", metadata.Dist.Tarball, metadata.Dist.Shasum, actualSha1))
+	}
+	return nil
 }
 
 func (registry *NpmRegistry) downloadTarball(metadata *PackageVersionMetadata) ([]byte, error) {
