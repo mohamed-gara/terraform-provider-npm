@@ -35,3 +35,5 @@ website/vendor
 
 # downloaded package directory
 /internal/*/package
+
+/vendor
