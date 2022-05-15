@@ -8,7 +8,7 @@ description: |-
 
 # npm Provider
 
-
+A Terraform plugin for downloading and accessing npm package files.
 
 ## Example Usage
 
@@ -16,7 +16,7 @@ description: |-
 terraform {
   required_providers {
     npm = {
-      version = "0.2.0"
+      version = "0.3.0"
       source  = "mohamed-gara/npm"
     }
   }
