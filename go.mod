@@ -1,6 +1,6 @@
 module github.com/mohamed-gara/terraform-provider-npm
 
-go 1.15
+go 1.16
 
 require (
 	github.com/codeclysm/extract v2.2.0+incompatible
