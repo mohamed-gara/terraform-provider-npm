@@ -4,7 +4,7 @@ go 1.16
 
 require (
 	github.com/codeclysm/extract v2.2.0+incompatible
-	github.com/gabriel-vasile/mimetype v1.4.0
+	github.com/gabriel-vasile/mimetype v1.4.1
 	github.com/h2non/filetype v1.1.3 // indirect
 	github.com/hashicorp/terraform-plugin-docs v0.5.1
 	github.com/hashicorp/terraform-plugin-log v0.2.1 // indirect
