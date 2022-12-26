@@ -10,5 +10,6 @@ require (
 	github.com/hashicorp/terraform-plugin-log v0.2.1 // indirect
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.10.1
 	github.com/juju/errors v0.0.0-20210818161939-5560c4c073ff // indirect
-	github.com/testcontainers/testcontainers-go v0.12.0
+	github.com/moby/sys/mount v0.2.0 // indirect
+	github.com/testcontainers/testcontainers-go v0.17.0
 )
